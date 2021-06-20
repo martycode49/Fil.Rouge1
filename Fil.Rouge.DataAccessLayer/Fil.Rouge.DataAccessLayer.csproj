@@ -51,7 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AccessLayer\AgentAccessLayer.cs" />
     <Compile Include="AccessLayer\QuizAccessLayer.cs" />
+    <Compile Include="AccessLayer\QuizParticipantAccessLayer.cs" />
     <Compile Include="Context\FilRougeContext.cs" />
     <Compile Include="Migrations\202106090545238_Initial.cs" />
     <Compile Include="Migrations\202106090545238_Initial.designer.cs">

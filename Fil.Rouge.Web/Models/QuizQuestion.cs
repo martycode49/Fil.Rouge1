@@ -1,8 +1,6 @@
 ﻿namespace Fil.Rouge.Web.Models
 {
-    using System;
     using System.Runtime.Serialization;
-    using System.Threading.Tasks;
 
     [DataContract]
     public class QuizQuestion

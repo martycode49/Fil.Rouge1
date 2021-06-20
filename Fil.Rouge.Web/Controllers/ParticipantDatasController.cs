@@ -6,16 +6,15 @@
     using Fil.Rouge.Web.Services;
     using Fil.Rouge.Web.Models;
 
-
-    public class QuizsController : Controller
+    public class ParticipantDatasController : Controller
     {
-        //private FilRougeContext db = new FilRougeContext(); >> On utilise le DAL
-        private readonly QuizService quizService = new QuizService();
+        //private FilRougeContext db = new FilRougeContext();
+        private readonly ParticipantDataService participantDataService = new ParticipantDataService();
 
-        // GET: Quizs
+        // GET: Quiz/5
         public async Task<ActionResult> Index()
         {
-            var list = await quizService.GetAll();
+            var list = await participantDataService.GetAll();
             return View(list);
         }
 
@@ -26,8 +25,8 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var quiz = await quizService.Get((int)id);
-            
+            var quiz = await participantDataService.Get((int)id);
+
             if (quiz == null)
             {
                 return HttpNotFound();
@@ -39,7 +38,7 @@
         public async Task<ActionResult> Create()
         {
             var vm = new CreateUpdateViewModel();
-            return  View(vm);
+            return View(vm);
         }
 
         // POST: Quizs/Create
@@ -51,13 +50,13 @@
         {
             if (ModelState.IsValid)
             {
-                await quizService.Create(vm.QuizQuestion);
+                await participantDataService.Create(vm.ParticipantData);
                 return RedirectToAction("Index");
             }
 
             return View(vm);
         }
-        
+
         // GET: Quizs/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
@@ -65,7 +64,7 @@
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var quiz = quizService.Get((int)id);
+            var quiz = participantDataService.Get((int)id);
             if (quiz == null)
             {
                 return HttpNotFound();
@@ -73,7 +72,7 @@
 
             var vm = new CreateUpdateViewModel
             {
-                QuizQuestion = await quiz
+                ParticipantData = await quiz
             };
             return View(vm);
         }
@@ -87,12 +86,12 @@
         {
             if (ModelState.IsValid)
             {
-                await quizService.Update(vm.QuizQuestion.Id, vm.QuizQuestion);
+                await participantDataService.Update(vm.ParticipantData.Id, vm.ParticipantData);
                 return RedirectToAction("Index");
             }
             return View(vm);
         }
-       
+
         // GET: Quizs/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
@@ -101,8 +100,8 @@
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
-            var quiz = await quizService.Get((int)id);
-            
+            var quiz = await participantDataService.Get((int)id);
+
             if (quiz == null)
             {
                 return HttpNotFound();
@@ -115,13 +114,12 @@
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            await quizService.Delete(id).ConfigureAwait(false);
+            await participantDataService.Delete(id).ConfigureAwait(false);
             return RedirectToAction("Index");
         }
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
-        
     }
 }

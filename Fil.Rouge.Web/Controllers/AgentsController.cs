@@ -6,43 +6,41 @@
     using Fil.Rouge.Web.Services;
     using Fil.Rouge.Web.Models;
 
-
-    public class QuizsController : Controller
+    public class AgentsController : Controller
     {
-        //private FilRougeContext db = new FilRougeContext(); >> On utilise le DAL
-        private readonly QuizService quizService = new QuizService();
+        //private FilRougeContext db = new FilRougeContext();
+        private readonly AgentService agentService = new AgentService();
 
-        // GET: Quizs
+        // GET: Agents
         public async Task<ActionResult> Index()
         {
-            var list = await quizService.GetAll();
+            var list = await agentService.GetAll();
             return View(list);
         }
 
-        // GET: Quizs/Details/5
+        // GET: Agents/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var quiz = await quizService.Get((int)id);
-            
-            if (quiz == null)
+            var agent = await agentService.Get((int)id);
+            if (agent == null)
             {
                 return HttpNotFound();
             }
-            return View(quiz);
+            return View(agent);
         }
 
-        // GET: Quizs/Create
-        public async Task<ActionResult> Create()
+        // GET: Agents/Create
+        public ActionResult Create()
         {
             var vm = new CreateUpdateViewModel();
-            return  View(vm);
+            return View(vm);
         }
 
-        // POST: Quizs/Create
+        // POST: Agents/Create
         // Afin de déjouer les attaques par survalidation, activez les propriétés spécifiques auxquelles vous voulez établir une liaison. Pour 
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -51,34 +49,33 @@
         {
             if (ModelState.IsValid)
             {
-                await quizService.Create(vm.QuizQuestion);
+                await agentService.Create(vm.Agent);
                 return RedirectToAction("Index");
             }
 
             return View(vm);
         }
-        
-        // GET: Quizs/Edit/5
+
+        // GET: Agents/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var quiz = quizService.Get((int)id);
-            if (quiz == null)
+            var agent = agentService.Get((int)id);
+            if (agent == null)
             {
                 return HttpNotFound();
             }
-
             var vm = new CreateUpdateViewModel
             {
-                QuizQuestion = await quiz
+                Agent = await agent
             };
             return View(vm);
         }
 
-        // POST: Quizs/Edit/5
+        // POST: Agents/Edit/5
         // Afin de déjouer les attaques par survalidation, activez les propriétés spécifiques auxquelles vous voulez établir une liaison. Pour 
         // plus de détails, consultez https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -87,41 +84,39 @@
         {
             if (ModelState.IsValid)
             {
-                await quizService.Update(vm.QuizQuestion.Id, vm.QuizQuestion);
+                await agentService.Update(vm.Agent.Id, vm.Agent);
                 return RedirectToAction("Index");
             }
             return View(vm);
         }
-       
-        // GET: Quizs/Delete/5
+
+        // GET: Agents/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-
-            var quiz = await quizService.Get((int)id);
-            
-            if (quiz == null)
+            var agent = await agentService.Get((int)id);
+            if (agent == null)
             {
                 return HttpNotFound();
             }
-            return View(quiz);
+            return View(agent);
         }
 
-        // POST: Quizs/Delete/5
+        // POST: Agents/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            await quizService.Delete(id).ConfigureAwait(false);
+            await agentService.Delete(id).ConfigureAwait(false);
             return RedirectToAction("Index");
         }
+
         protected override void Dispose(bool disposing)
         {
             base.Dispose(disposing);
         }
-        
     }
 }

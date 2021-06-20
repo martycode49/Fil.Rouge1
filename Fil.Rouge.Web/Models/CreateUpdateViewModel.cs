@@ -1,11 +1,11 @@
 ﻿namespace Fil.Rouge.Web.Models
 {
-    using System.Web.Mvc;
-    using System.Collections.Generic;
 
     public class CreateUpdateViewModel
     {
+        public Agent Agent { get; set; }
         public QuizQuestion QuizQuestion { get; set; }
+        public ParticipantData ParticipantData { get; set; }
 
     }
 }

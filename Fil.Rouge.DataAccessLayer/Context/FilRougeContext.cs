@@ -17,6 +17,5 @@
         internal DbSet<ParticipantData> ParticipantDatas { get; set; }
         internal DbSet<Quiz> Quizs { get; set; }
 
-        //public System.Data.Entity.DbSet<Fil.Rouge.DataAccessLayer.Models.Quiz> Quizs { get; set; }
     }
 }
